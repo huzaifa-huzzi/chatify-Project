@@ -14,5 +14,11 @@ var darkTheme = ThemeData(
      primaryContainer: AppColors.dContainerColor,
      onPrimaryContainer: AppColors.donContainerColor
 
+  ),
+  textTheme: TextTheme(
+    headlineLarge: TextStyle(fontSize: 32,color: AppColors.primaryColor,fontFamily: "Poppins",fontWeight: FontWeight.w800),
+    headlineMedium: TextStyle(fontSize: 30,color: AppColors.donBackgroundColor,fontFamily: "Poppins",fontWeight: FontWeight.w600),
+    headlineSmall: TextStyle(fontSize: 20,color: AppColors.donBackgroundColor,fontFamily: "Poppins",fontWeight: FontWeight.bold),
+
   )
 );
