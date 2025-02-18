@@ -22,6 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
               padding: EdgeInsets.only(top: height * 0.1),
             child: Column(
               children: [
+                 /// Logo and App Name
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -33,8 +34,23 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 SizedBox(height: height * 0.02,),
                 Text(AppString.appName,style: Theme.of(context).textTheme.headlineLarge,),
-                SizedBox(height: height * 0.02,),
-
+                /// Boy and Girl Pic
+                SizedBox(height: height * 0.1,),
+                Padding(
+                  padding:  EdgeInsets.only(left: width * 0.2),
+                  child: Row(
+                    children: [
+                      Image.asset(AssetImages.boyPic),
+                      SvgPicture.asset(AssetImages.connect),
+                      Image.asset(AssetImages.girlPic),
+                    ],
+                  ),
+                ),
+                SizedBox(height: height * 0.01,),
+                Text(SplashScreenTexts.nowYouAre,style: Theme.of(context).textTheme.headlineMedium,),
+                Text(SplashScreenTexts.connected,style: Theme.of(context).textTheme.headlineLarge,),
+                SizedBox(height: height * 0.06,),
+                Text(SplashScreenTexts.description,style: Theme.of(context).textTheme.labelLarge,textAlign: TextAlign.center,),
               ],
             ),
           )

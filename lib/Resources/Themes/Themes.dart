@@ -21,12 +21,8 @@ var darkTheme = ThemeData(
   scaffoldBackgroundColor: AppColors.backgroundColor, // Main page background
   cardColor: AppColors.dContainerColor, // Background for cards
 
-  // Icon Theme
-  iconTheme: IconThemeData(
-    color: AppColors.donBackgroundColor, // Set icon color globally
-  ),
-
   textTheme: TextTheme(
+    /// headlines
     headlineLarge: TextStyle(
       fontSize: 32,
       color: AppColors.primaryColor,
@@ -45,5 +41,24 @@ var darkTheme = ThemeData(
       fontFamily: "Poppins",
       fontWeight: FontWeight.bold,
     ),
+    /// labels
+    labelLarge: TextStyle(
+      fontSize: 15,
+      color: AppColors.donContainerColor,
+      fontFamily: "Poppins",
+      fontWeight: FontWeight.w400,
   ),
+    labelMedium: TextStyle(
+      fontSize: 12,
+      color: AppColors.donContainerColor,
+      fontFamily: "Poppins",
+      fontWeight: FontWeight.w400,
+    ),
+    labelSmall: TextStyle(
+      fontSize: 12,
+      color: AppColors.donContainerColor,
+      fontFamily: "Poppins",
+      fontWeight: FontWeight.w300,
+    ),
+  )
 );

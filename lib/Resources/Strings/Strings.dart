@@ -4,7 +4,7 @@ class AppString {
 }
 
 
-class SplashScreen {
+class SplashScreenTexts {
 
   static const appName = 'Chatify';
   static const nowYouAre = 'Now You Are';
