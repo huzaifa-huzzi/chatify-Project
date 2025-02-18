@@ -1,8 +1,9 @@
 import 'package:chatify_app/Resources/Colors/Colors.dart';
 import 'package:flutter/material.dart';
 
-
+ /// Light Theme
 var lightTheme = ThemeData();
+ /// Dark Theme
 var darkTheme = ThemeData(
   brightness: Brightness.dark,
   useMaterial3: true,
