@@ -2,6 +2,7 @@ import 'package:chatify_app/Resources/Images/Images.dart';
 import 'package:chatify_app/Resources/Strings/Strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:slide_to_act/slide_to_act.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -49,10 +50,23 @@ class _SplashScreenState extends State<SplashScreen> {
                 SizedBox(height: height * 0.01,),
                 Text(SplashScreenTexts.nowYouAre,style: Theme.of(context).textTheme.headlineMedium,),
                 Text(SplashScreenTexts.connected,style: Theme.of(context).textTheme.headlineLarge,),
-                SizedBox(height: height * 0.06,),
+                SizedBox(height: height * 0.02,),
                 Text(SplashScreenTexts.description,style: Theme.of(context).textTheme.labelLarge,textAlign: TextAlign.center,),
                 /// Sliding Button
-
+                SizedBox(height: height * 0.1,),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                  child: SlideAction(
+                    onSubmit: (){},
+                    sliderButtonIcon: SvgPicture.asset(AssetImages.plug,width: 25,),
+                    sliderRotate: false,
+                    reversed: false,
+                    text: SplashScreenTexts.buttonTexts,
+                    submittedIcon: SvgPicture.asset(AssetImages.connect,width: 25,),
+                    innerColor: Theme.of(context).colorScheme.primary,
+                    outerColor: Theme.of(context).colorScheme.primaryContainer,
+                  ),
+                ),
               ],
             ),
           )
