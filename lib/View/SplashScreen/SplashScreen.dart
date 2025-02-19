@@ -1,7 +1,9 @@
 import 'package:chatify_app/Resources/Images/Images.dart';
 import 'package:chatify_app/Resources/Strings/Strings.dart';
+import 'package:chatify_app/View/Authentication/LoginScreen/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
 
@@ -57,10 +59,11 @@ class _SplashScreenState extends State<SplashScreen> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: width * 0.05),
                   child: SlideAction(
-                    onSubmit: (){},
+                    onSubmit: (){
+                      Get.to(() => LoginScreen(),transition: Transition.leftToRight,);
+                    },
                     sliderButtonIcon: SvgPicture.asset(AssetImages.plug,width: 25,),
                     sliderRotate: false,
-                    reversed: false,
                     text: SplashScreenTexts.buttonTexts,
                     submittedIcon: SvgPicture.asset(AssetImages.connect,width: 25,),
                     innerColor: Theme.of(context).colorScheme.primary,

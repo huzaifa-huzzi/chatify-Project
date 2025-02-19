@@ -41,7 +41,7 @@ var darkTheme = ThemeData(
       fontFamily: "Poppins",
       fontWeight: FontWeight.bold,
     ),
-    /// labels
+    /// labels Texts
     labelLarge: TextStyle(
       fontSize: 15,
       color: AppColors.donContainerColor,
@@ -59,6 +59,19 @@ var darkTheme = ThemeData(
       color: AppColors.donContainerColor,
       fontFamily: "Poppins",
       fontWeight: FontWeight.w300,
+    ),
+    /// Body Texts
+    bodyLarge: TextStyle(
+      fontSize: 18,
+      color: AppColors.donBackgroundColor,
+      fontFamily: "Poppins",
+      fontWeight: FontWeight.w500,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: 15,
+      color: AppColors.donBackgroundColor,
+      fontFamily: "Poppins",
+      fontWeight: FontWeight.w500,
     ),
   )
 );
