@@ -51,6 +51,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 Text(SplashScreenTexts.connected,style: Theme.of(context).textTheme.headlineLarge,),
                 SizedBox(height: height * 0.06,),
                 Text(SplashScreenTexts.description,style: Theme.of(context).textTheme.labelLarge,textAlign: TextAlign.center,),
+                /// Sliding Button
+
               ],
             ),
           )
