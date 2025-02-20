@@ -1,6 +1,8 @@
 import 'package:chatify_app/Resources/Colors/Colors.dart';
 import 'package:chatify_app/Resources/Reusable%20Widgets/RoundedButton.dart';
+import 'package:chatify_app/View/HomePage/HomeScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 class SignUpForm extends StatefulWidget {
@@ -20,6 +22,10 @@ class _SignUpFormState extends State<SignUpForm> {
         TextField(
           decoration: InputDecoration(
             fillColor: AppColors.backgroundColor,
+            border: UnderlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10),
+            ),
             filled: true,
             hintText: "Person",
             prefixIcon: Icon(Icons.person),
@@ -28,6 +34,10 @@ class _SignUpFormState extends State<SignUpForm> {
         SizedBox(height: height * 0.02,),
         TextField(
           decoration: InputDecoration(
+            border: UnderlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10),
+            ),
             fillColor: AppColors.backgroundColor,
             filled: true,
             hintText: "Email",
@@ -37,6 +47,10 @@ class _SignUpFormState extends State<SignUpForm> {
         SizedBox(height: height * 0.02,),
         TextField(
           decoration: InputDecoration(
+            border: UnderlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10),
+            ),
             fillColor: AppColors.backgroundColor,
             filled: true,
             hintText: "Password",
@@ -46,7 +60,9 @@ class _SignUpFormState extends State<SignUpForm> {
         SizedBox(height: height * 0.04,),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.2),
-          child: RoundedButton(title: 'SignUp', onTap: (){}),
+          child: RoundedButton(title: 'SignUp', onTap: (){
+            Get.to(() => HomePage());
+          }),
         ),
       ],
     );

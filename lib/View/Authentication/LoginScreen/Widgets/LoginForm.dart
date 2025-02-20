@@ -1,6 +1,8 @@
 import 'package:chatify_app/Resources/Colors/Colors.dart';
 import 'package:chatify_app/Resources/Reusable%20Widgets/RoundedButton.dart';
+import 'package:chatify_app/View/HomePage/HomeScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 
@@ -21,6 +23,10 @@ class _LoginFormState extends State<LoginForm> {
         SizedBox(height:  height * 0.01,),
         TextField(
           decoration: InputDecoration(
+            border: UnderlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10),
+            ),
             fillColor: AppColors.backgroundColor,
             filled: true,
             hintText: "Email",
@@ -30,6 +36,10 @@ class _LoginFormState extends State<LoginForm> {
         SizedBox(height: height * 0.02,),
         TextField(
           decoration: InputDecoration(
+            border: UnderlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(10),
+            ),
             fillColor: AppColors.backgroundColor,
             filled: true,
             hintText: "Password",
@@ -39,7 +49,9 @@ class _LoginFormState extends State<LoginForm> {
         SizedBox(height: height * 0.05,),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.2),
-          child: RoundedButton(title: 'Login', onTap: (){}),
+          child: RoundedButton(title: 'Login', onTap: (){
+            Get.to(() => HomePage());
+          }),
         ),
       ],
     );
