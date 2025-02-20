@@ -15,8 +15,6 @@ var darkTheme = ThemeData(
   colorScheme: ColorScheme.dark(
     primary: AppColors.primaryColor,
     onPrimary: AppColors.donBackgroundColor,
-    background: AppColors.backgroundColor,
-    onBackground: AppColors.donBackgroundColor,
     primaryContainer: AppColors.dContainerColor,
     onPrimaryContainer: AppColors.donContainerColor,
     surface: AppColors.backgroundColor, // Alternative for general background

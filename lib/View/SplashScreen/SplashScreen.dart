@@ -61,6 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: SlideAction(
                     onSubmit: (){
                       Get.to(() => LoginScreen(),transition: Transition.leftToRight,);
+                      return null;
                     },
                     sliderButtonIcon: SvgPicture.asset(AssetImages.plug,width: 25,),
                     sliderRotate: false,
