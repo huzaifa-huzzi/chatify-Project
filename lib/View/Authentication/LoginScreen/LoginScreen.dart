@@ -1,5 +1,6 @@
 import 'package:chatify_app/Resources/Images/Images.dart';
 import 'package:chatify_app/Resources/Strings/Strings.dart';
+import 'package:chatify_app/View/Authentication/LoginScreen/Widgets/LoginForm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -19,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(top: height * 0.1),
@@ -149,12 +151,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ],
                             ),
-
+                            SizedBox(height: height * 0.04),
+                            LoginForm(),
                           ],
                         ),
                   ),
                 ),
               ),
+
             ],
           ),
         ),

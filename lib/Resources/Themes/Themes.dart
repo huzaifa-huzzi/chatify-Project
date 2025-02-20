@@ -8,6 +8,10 @@ var lightTheme = ThemeData();
 var darkTheme = ThemeData(
   brightness: Brightness.dark,
   useMaterial3: true,
+  inputDecorationTheme: InputDecorationTheme(
+    fillColor: AppColors.backgroundColor,
+    filled: true,
+  ),
   colorScheme: ColorScheme.dark(
     primary: AppColors.primaryColor,
     onPrimary: AppColors.donBackgroundColor,
@@ -18,9 +22,8 @@ var darkTheme = ThemeData(
     surface: AppColors.backgroundColor, // Alternative for general background
     onSurface: AppColors.donBackgroundColor, // Text/icons on surfaces
   ),
-  scaffoldBackgroundColor: AppColors.backgroundColor, // Main page background
-  cardColor: AppColors.dContainerColor, // Background for cards
-
+  scaffoldBackgroundColor: AppColors.backgroundColor,
+  cardColor: AppColors.dContainerColor,
   textTheme: TextTheme(
     /// headlines
     headlineLarge: TextStyle(
