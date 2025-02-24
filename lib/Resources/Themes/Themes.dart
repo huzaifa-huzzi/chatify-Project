@@ -8,6 +8,9 @@ var lightTheme = ThemeData();
 var darkTheme = ThemeData(
   brightness: Brightness.dark,
   useMaterial3: true,
+  appBarTheme: AppBarTheme(
+    backgroundColor: AppColors.dContainerColor
+  ),
   inputDecorationTheme: InputDecorationTheme(
     fillColor: AppColors.backgroundColor,
     filled: true,
