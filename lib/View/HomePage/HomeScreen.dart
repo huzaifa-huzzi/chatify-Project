@@ -1,8 +1,8 @@
 import 'package:chatify_app/Resources/Images/Images.dart';
+import 'package:chatify_app/Resources/Reusable%20Widgets/myTabBar.dart';
 import 'package:chatify_app/Resources/Strings/Strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart'
-
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,13 +12,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  TabController tabController = TabController(length: 3, vsync:this);
+  late TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(AppString.appName,style: Theme.of(context).textTheme.headlineSmall,),
+        title: Text(
+          AppString.appName,
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SvgPicture.asset(
@@ -41,15 +56,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             icon: const Icon(Icons.more_vert),
           ),
         ],
-        bottom: TabBar(
-          controller: tabController,
-
-            tabs: [
-             Text('Chats'),
-             Text('Groups'),
-             Text('Calls'),
-            ]
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: myTabBar(tabController, context),
         ),
+      ),
+      body: Column(
+        children: [],
       ),
     );
   }
