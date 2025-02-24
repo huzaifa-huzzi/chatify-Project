@@ -1,4 +1,6 @@
+import 'package:chatify_app/Resources/Colors/Colors.dart';
 import 'package:chatify_app/Resources/Images/Images.dart';
+import 'package:chatify_app/Resources/Reusable%20Widgets/chatsList.dart';
 import 'package:chatify_app/Resources/Reusable%20Widgets/myTabBar.dart';
 import 'package:chatify_app/Resources/Strings/Strings.dart';
 import 'package:flutter/material.dart';
@@ -61,9 +63,32 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           child: myTabBar(tabController, context),
         ),
       ),
-      body: Column(
-        children: [],
+      floatingActionButton: FloatingActionButton(
+          onPressed: (){},
+          backgroundColor: Theme.of(context).colorScheme.primary,
+         child: Icon(Icons.add,color:AppColors.donBackgroundColor ,),
       ),
+      body:TabBarView(
+        controller: tabController,
+          children: [
+            ChatsList(),
+            ListView(
+              children: [
+                ListTile(
+                  title: Text('Name Nitish'),
+                )
+              ],
+            ),
+            ListView(
+              children: [
+                ListTile(
+                  title: Text('Name Nitish'),
+                )
+              ],
+            )
+          ]
+      )
+
     );
   }
 }
