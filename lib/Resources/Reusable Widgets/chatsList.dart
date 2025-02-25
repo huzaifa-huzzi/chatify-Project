@@ -3,6 +3,8 @@ import 'package:chatify_app/View/chatPage/ChatPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
+
 class ChatsList extends StatelessWidget {
   const ChatsList({super.key});
 
