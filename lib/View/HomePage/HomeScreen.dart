@@ -6,6 +6,8 @@ import 'package:chatify_app/Resources/Strings/Strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
