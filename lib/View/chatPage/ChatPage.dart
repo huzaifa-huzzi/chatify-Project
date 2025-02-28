@@ -1,6 +1,7 @@
 import 'package:chatify_app/Resources/Images/Images.dart';
+import 'package:chatify_app/View/chatPage/Widgets/ChatsWidget.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 
 
 
@@ -11,6 +12,8 @@ class ChatPage extends StatefulWidget {
   State<ChatPage> createState() => _ChatPageState();
 }
 class _ChatPageState extends State<ChatPage> {
+
+  
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
@@ -38,27 +41,20 @@ class _ChatPageState extends State<ChatPage> {
           padding: EdgeInsets.all(10),
         child: Column(
           children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              constraints: BoxConstraints(
-                minWidth: 0,
-                maxWidth: width /1.3,
-              ),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(0),
-                  bottomRight: Radius.circular(10)
-                )
-              ),
-              child: Flexible(
-                  child: Text('asd')
-              ),
+            ChatsWidget(
+              message: 'HEllo How are you ?',
+              isComing: true,
+              time: '10:10 Am',
+              status: 'Read',
+            ),
+            ChatsWidget(
+              message: 'HEllo How are you ?',
+              isComing: false,
+              time: '10:10 Am',
+              status: 'Read',
             )
           ],
-        ),
+        )
       ),
     );
   }
