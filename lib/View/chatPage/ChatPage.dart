@@ -37,23 +37,49 @@ class _ChatPageState extends State<ChatPage> {
           IconButton(onPressed: (){}, icon: Icon(Icons.video_call))
         ],
       ),
+
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primaryContainer,
+        ),
+        child: Row(
+          children: [
+            SvgPicture.asset(AssetImages.mic),
+              Expanded(child: TextField())
+          ],
+        ),
+      ),
       body: Padding(
           padding: EdgeInsets.all(10),
-        child: Column(
+        child: ListView(
           children: [
-            ChatsWidget(
-              message: 'HEllo How are you ?',
-              isComing: true,
-              time: '10:10 Am',
-              status: 'Read',
+            Column(
+              children: [
+                ChatsWidget(
+                  imageUrl: '',
+                  message: 'HEllo How are you ?',
+                  isComing: true,
+                  time: '10:10 Am',
+                  status: 'Read',
+                ),
+                ChatsWidget(
+                  imageUrl: '',
+                  message: 'HEllo How are you ?',
+                  isComing: false,
+                  time: '10:10 Am',
+                  status: 'Read',
+                ),
+                ChatsWidget(
+                  message: 'HEllo How are you ?',
+                  imageUrl: AssetImages.boyPic,
+                  isComing: false,
+                  time: '10:10 Am',
+                  status: 'Read',
+                ),
+              ],
             ),
-            ChatsWidget(
-              message: 'HEllo How are you ?',
-              isComing: false,
-              time: '10:10 Am',
-              status: 'Read',
-            )
           ],
+
         )
       ),
     );
