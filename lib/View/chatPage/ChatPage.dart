@@ -37,15 +37,28 @@ class _ChatPageState extends State<ChatPage> {
           IconButton(onPressed: (){}, icon: Icon(Icons.video_call))
         ],
       ),
-
-      bottomNavigationBar: Container(
+     floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        margin: EdgeInsets.all(20),
+        padding: EdgeInsets.symmetric(vertical: height * 0.01,horizontal: width * 0.015),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(100),
+          color: Theme.of(context).colorScheme.primary,
         ),
         child: Row(
           children: [
-            SvgPicture.asset(AssetImages.mic),
-              Expanded(child: TextField())
+            SvgPicture.asset(AssetImages.mic,width: 30,),
+              SizedBox(width: width * 0.01,),
+              Expanded(child: TextField(
+                decoration: InputDecoration(
+                  filled: false,
+                  hintText: "Type mess..."
+                ),
+              )),
+            SizedBox(width: width * 0.01,),
+            SvgPicture.asset(AssetImages.imageOpener,width: 30,),
+            SizedBox(width: width * 0.01,),
+            SvgPicture.asset(AssetImages.send,width: 30,),
           ],
         ),
       ),
