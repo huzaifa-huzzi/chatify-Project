@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     duration: const Duration(milliseconds: 100),
                     child: Container(
                       padding: const EdgeInsets.all(25),
-                      height: isLogin.value ? height * 0.4 : height * 0.55,
+                      height: isLogin.value ? height * 0.5 : height * 0.55,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Theme.of(context).colorScheme.primaryContainer,
