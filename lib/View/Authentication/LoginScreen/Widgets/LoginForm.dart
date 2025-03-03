@@ -46,7 +46,7 @@ class _LoginFormState extends State<LoginForm> {
             prefixIcon: Icon(Icons.password_outlined),
           ),
         ),
-        SizedBox(height: height * 0.05,),
+        SizedBox(height: height * 0.03,),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.2),
           child: RoundedButton(title: 'Login', onTap: (){
