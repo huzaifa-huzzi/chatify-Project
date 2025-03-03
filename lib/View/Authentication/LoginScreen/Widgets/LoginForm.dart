@@ -1,10 +1,9 @@
 import 'package:chatify_app/Resources/Colors/Colors.dart';
 import 'package:chatify_app/Resources/Reusable%20Widgets/RoundedButton.dart';
 import 'package:chatify_app/View/HomePage/HomeScreen.dart';
+import 'package:chatify_app/View_Model/Controllers/LoginController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -14,14 +13,18 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final LoginController loginController = Get.put(LoginController());
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
+
     return Column(
       children: [
-        SizedBox(height:  height * 0.01,),
+        SizedBox(height: height * 0.01),
         TextField(
+          controller: loginController.emailController,
           decoration: InputDecoration(
             border: UnderlineInputBorder(
               borderSide: BorderSide.none,
@@ -33,8 +36,10 @@ class _LoginFormState extends State<LoginForm> {
             prefixIcon: Icon(Icons.alternate_email_rounded),
           ),
         ),
-        SizedBox(height: height * 0.02,),
+        SizedBox(height: height * 0.02),
         TextField(
+          controller: loginController.passwordController,
+          obscureText: true,
           decoration: InputDecoration(
             border: UnderlineInputBorder(
               borderSide: BorderSide.none,
@@ -46,12 +51,19 @@ class _LoginFormState extends State<LoginForm> {
             prefixIcon: Icon(Icons.password_outlined),
           ),
         ),
-        SizedBox(height: height * 0.03,),
+        SizedBox(height: height * 0.03),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.2),
-          child: RoundedButton(title: 'Login', onTap: (){
-            Get.to(() => HomePage());
-          }),
+          child: Obx(() => RoundedButton(
+            title: loginController.loading.value ? 'Logging in...' : 'Login',
+            onTap: () {
+              loginController.login(
+                loginController.emailController.text.trim(),
+                loginController.passwordController.text.trim(),
+                context,
+              );
+            },
+          )),
         ),
       ],
     );
