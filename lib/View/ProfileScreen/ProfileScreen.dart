@@ -74,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                        ],
                                    ),
                                  ),
-                                 SizedBox(width: width * 0.1,),
+                                 SizedBox(width: width * 0.06,),
                                  Container(
                                    padding: EdgeInsets.all(15),
                                    decoration: BoxDecoration(
