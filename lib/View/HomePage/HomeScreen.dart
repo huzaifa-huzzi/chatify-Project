@@ -3,8 +3,11 @@ import 'package:chatify_app/Resources/Images/Images.dart';
 import 'package:chatify_app/Resources/Reusable%20Widgets/chatsList.dart';
 import 'package:chatify_app/Resources/Reusable%20Widgets/myTabBar.dart';
 import 'package:chatify_app/Resources/Strings/Strings.dart';
+import 'package:chatify_app/View/ProfileScreen/ProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 
 
@@ -58,7 +61,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             icon: const Icon(Icons.search),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.to(() => ProfileScreen());
+            },
             icon: const Icon(Icons.more_vert),
           ),
         ],

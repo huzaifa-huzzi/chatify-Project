@@ -1,5 +1,5 @@
 import 'package:chatify_app/Resources/Themes/Themes.dart';
-import 'package:chatify_app/View/SplashScreen/SplashScreen.dart';
+import 'package:chatify_app/View/SplashScreen/MainSplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.dark,
-      home: SplashScreen(),
+      home: MainSplashScreen(),
     );
   }
 }
