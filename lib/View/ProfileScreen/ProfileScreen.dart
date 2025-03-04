@@ -1,6 +1,8 @@
 import 'package:chatify_app/Resources/Colors/Colors.dart';
 import 'package:chatify_app/Resources/Images/Images.dart';
+import 'package:chatify_app/View/ProfileScreen/Widget/UpdateProfileScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 class ProfileScreen extends StatefulWidget {
@@ -15,11 +17,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
         backgroundColor: Theme.of(context).colorScheme.primary,
+        actions: [
+          IconButton(onPressed: (){
+            Get.to(() => UpdateProfile());
+          }, icon: Icon(Icons.edit))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
