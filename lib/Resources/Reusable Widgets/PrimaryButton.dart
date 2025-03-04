@@ -36,7 +36,7 @@ class PrimaryBtn extends StatelessWidget {
                 colors: [Colors.white],
               ),
             )
-                : const Icon(Icons.lock_outline_rounded, color: Colors.white),
+                :  icon,
             SizedBox(width: width * 0.02),
             Text(
               title,
