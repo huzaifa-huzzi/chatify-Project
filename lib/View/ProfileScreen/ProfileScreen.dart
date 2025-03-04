@@ -1,140 +1,73 @@
 import 'package:chatify_app/Resources/Colors/Colors.dart';
 import 'package:chatify_app/Resources/Images/Images.dart';
 import 'package:chatify_app/Resources/Reusable%20Widgets/RoundedButton.dart';
-import 'package:chatify_app/Services/SessionManager.dart';
-import 'package:chatify_app/Utils/Utils.dart';
-import 'package:chatify_app/View/Authentication/LoginScreen/LoginScreen.dart';
-import 'package:chatify_app/View/ProfileScreen/Widget/ContactButton.dart';
-import 'package:chatify_app/View/ProfileScreen/Widget/UpdateProfileScreen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:chatify_app/View/ProfileScreen/Widgets/InfoRowsWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
-
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  bool loading = false;
-  final _ref = FirebaseDatabase.instance.ref('user');
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        actions: [
-          IconButton(
-              onPressed: () {
-                Get.to(() => UpdateProfile());
-              },
-              icon: Icon(Icons.edit))
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            /// Personal Info Section
-            Container(
-              height: height * 0.4,
-              padding: EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Theme.of(context).colorScheme.primaryContainer,
+      body: Center(
+        child: Container(
+          width: width * 0.9,
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Profile Picture
+              Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundColor: Colors.white,
+                    backgroundImage: AssetImage(AssetImages.boyPic),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.edit, color: Colors.white, size: 20),
+                  )
+                ],
               ),
-              child: StreamBuilder(
-                stream: _ref.child(SessionManager().userId.toString()).onValue,
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (!snapshot.hasData || snapshot.data?.snapshot.value == null) {
-                    return Center(child: Text("No Data Available"));
-                  }
+              SizedBox(height: 20),
 
-                  Map<dynamic, dynamic> data =
-                  snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
-                  String name = data['username'] ?? 'Unknown User';
-                  String email = data['email'] ?? 'No Email';
+              // Name
+              InfoRows(icon: Icons.person, text: "Nitish Kumar", isEditable: true),
 
-                  return Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Image.asset(AssetImages.boyPic)],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(name, style: Theme.of(context).textTheme.bodyLarge),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(email, style: Theme.of(context).textTheme.bodyLarge),
-                        ],
-                      ),
-                      SizedBox(height: height * 0.03),
-                      Row(
-                        children: [
-                          ContactButton(
-                            icon: Icons.phone,
-                            label: "Call",
-                            color: Color(0xff039c00),
-                            width: width,
-                          ),
-                          SizedBox(width: width * 0.06),
-                          ContactButton(
-                            icon: Icons.video_call,
-                            label: "Video",
-                            color: Colors.red,
-                            width: width,
-                          ),
-                          SizedBox(width: width * 0.1),
-                          ContactButton(
-                            icon: Icons.chat,
-                            label: "Chat",
-                            color: AppColors.dContainerColor,
-                            width: width,
-                          ),
-                        ],
-                      ),
+              // About
+              InfoRows(icon: Icons.info, text: "I am Groot", isEditable: true),
 
-                    ],
-                  );
-                },
-              ),
-            ),
+              // Email
+              InfoRows(icon: Icons.email, text: "Nitishr833@gmail.com", isEditable: false),
 
-            SizedBox(height: height * 0.35),
+              // Phone Number
+              InfoRows(icon: Icons.phone, text: "+91 7033161175", isEditable: false),
 
-            /// Logout Button
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: RoundedButton(
-                  title: 'Logout',
-                  loading: loading,
-                  onTap: () {
-                    setState(() => loading = true);
-                    _auth.signOut().then((value) {
-                      SessionManager().userId = '';
-                      Get.to(() => LoginScreen());
-                      Utils.snackBar('Logout', 'Logout Successful');
-                    }).catchError((error) {
-                      Utils.toastMessage('Issue logging out');
-                    }).whenComplete(() => setState(() => loading = false));
-                  }),
-            ),
-          ],
+              SizedBox(height: 20),
+
+              // Save Button
+             Row(
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+
+               ],
+             )
+            ],
+          ),
         ),
       ),
     );

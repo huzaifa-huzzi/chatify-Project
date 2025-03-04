@@ -2,14 +2,14 @@ import 'package:chatify_app/Resources/Reusable%20Widgets/RoundedButton.dart';
 import 'package:flutter/material.dart';
 
 
-class UpdateProfile extends StatefulWidget {
-  const UpdateProfile({super.key});
+class UserUpdateProfile extends StatefulWidget {
+  const UserUpdateProfile({super.key});
 
   @override
-  State<UpdateProfile> createState() => _UpdateProfileState();
+  State<UserUpdateProfile> createState() => _UserUpdateProfileState();
 }
 
-class _UpdateProfileState extends State<UpdateProfile> {
+class _UserUpdateProfileState extends State<UserUpdateProfile> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
