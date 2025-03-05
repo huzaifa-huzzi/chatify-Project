@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
   var isEditing = false.obs;
-  var name = "Nitish Kumar".obs;
-  var bio = "I am Groot".obs;
-  var email = "Nitishr833@gmail.com".obs;
+  var name = ''.obs;
+  var bio = ''.obs;
+  var email = ''.obs;
 
   void toggleEditMode() {
     isEditing.value = !isEditing.value;
