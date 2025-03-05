@@ -36,7 +36,8 @@ class SignUpController extends GetxController {
         email: email,
         password: password,
       ).then((value) async {
-        SessionManager().userId = value.user!.uid.toString();
+
+        SessionManager().setUser(value.user!.uid.toString());
 
         await ref.child(value.user!.uid.toString()).set({
           'uid': value.user!.uid.toString(),

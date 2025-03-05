@@ -1,4 +1,5 @@
 import 'package:chatify_app/Resources/Themes/Themes.dart';
+import 'package:chatify_app/Services/SessionManager.dart';
 import 'package:chatify_app/View/SplashScreen/MainSplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import 'firebase_options.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await SessionManager().init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Chtify',
+      title: 'Chatify',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,

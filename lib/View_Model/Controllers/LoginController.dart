@@ -12,10 +12,11 @@ class LoginController extends GetxController {
   final DatabaseReference _ref = FirebaseDatabase.instance.ref().child('user');
 
   var emailController = TextEditingController();
-  var passwordController = TextEditingController();
+  var passwordController = TextEditingController()
+  var usernameController = TextEditingController();
   final loading = false.obs;
 
-  void login(String email, String password,BuildContext context) async {
+  void login(String email, String password,String username,BuildContext context) async {
     loading.value = true;
 
     try {
@@ -24,10 +25,11 @@ class LoginController extends GetxController {
         password: password,
       );
       if (userCredential.user != null) {
-        SessionManager().userId = userCredential.user!.uid;
+        SessionManager().setUser(userCredential.user!.uid.toString());
         await _ref.child(userCredential.user!.uid).set({
           'uid': userCredential.user!.uid,
           'email': userCredential.user!.email,
+          'username' : userCredential.user!.displayName,
         });
         loading.value = false;
         Get.to(() => const HomePage());
@@ -38,7 +40,7 @@ class LoginController extends GetxController {
       }
     } catch (e) {
       loading.value = false;
-      Utils.snackBar('Error', 'Login failed: $e');
+      Utils.toastMessage( 'Login failed: $e');
     }
   }
 
