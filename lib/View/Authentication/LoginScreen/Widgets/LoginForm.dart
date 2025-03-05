@@ -30,26 +30,6 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           SizedBox(height: height * 0.01),
           TextFormField(
-            controller: loginController.usernameController,
-            keyboardType: TextInputType.name,
-            focusNode: _userFocus,
-            textInputAction: TextInputAction.next,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ),
-              fillColor: AppColors.backgroundColor,
-              filled: true,
-              hintText: "username",
-              prefixIcon: Icon(Icons.person),
-            ),
-            onFieldSubmitted: (_) {
-              Utils.fieldFocusChange(context, _userFocus, _emailFocus);
-            },
-          ),
-          SizedBox(height: height * 0.01),
-          TextFormField(
             controller: loginController.emailController,
             keyboardType: TextInputType.emailAddress,
             focusNode: _emailFocus,
@@ -96,7 +76,6 @@ class _LoginFormState extends State<LoginForm> {
               onTap: () {
                 if (_formKey.currentState!.validate()) {
                   loginController.login(
-                      loginController.usernameController.text.trim(),
                     loginController.emailController.text.trim(),
                     loginController.passwordController.text.trim(),
                     context

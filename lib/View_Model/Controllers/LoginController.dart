@@ -1,7 +1,6 @@
 import 'package:chatify_app/Services/SessionManager.dart';
 import 'package:chatify_app/Utils/Utils.dart';
 import 'package:chatify_app/View/HomePage/HomeScreen.dart';
-import 'package:chatify_app/View/chatPage/ChatPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +12,9 @@ class LoginController extends GetxController {
 
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
-  var usernameController = TextEditingController();
   final loading = false.obs;
 
-  void login(String email, String password,String username,BuildContext context) async {
+  void login(String email, String password,BuildContext context) async {
     loading.value = true;
 
     try {
@@ -29,7 +27,6 @@ class LoginController extends GetxController {
         await _ref.child(userCredential.user!.uid).set({
           'uid': userCredential.user!.uid,
           'email': userCredential.user!.email,
-          'username' : username,
         });
         loading.value = false;
         Get.to(() => const HomePage());
