@@ -16,6 +16,7 @@ class _LoginFormState extends State<LoginForm> {
   final LoginController loginController = Get.put(LoginController());
   final _formKey = GlobalKey<FormState>();
   final FocusNode _emailFocus = FocusNode();
+  final FocusNode _userFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
 
   @override
@@ -27,6 +28,26 @@ class _LoginFormState extends State<LoginForm> {
       key: _formKey,
       child: Column(
         children: [
+          SizedBox(height: height * 0.01),
+          TextFormField(
+            controller: loginController.usernameController,
+            keyboardType: TextInputType.name,
+            focusNode: _userFocus,
+            textInputAction: TextInputAction.next,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none,
+              ),
+              fillColor: AppColors.backgroundColor,
+              filled: true,
+              hintText: "username",
+              prefixIcon: Icon(Icons.person),
+            ),
+            onFieldSubmitted: (_) {
+              Utils.fieldFocusChange(context, _userFocus, _emailFocus);
+            },
+          ),
           SizedBox(height: height * 0.01),
           TextFormField(
             controller: loginController.emailController,
@@ -66,7 +87,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             validator: Utils().validatePassword,
           ),
-          SizedBox(height: height * 0.03),
+          SizedBox(height: height * 0.01),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: width * 0.2),
             child: Obx(() => RoundedButton(
@@ -75,9 +96,10 @@ class _LoginFormState extends State<LoginForm> {
               onTap: () {
                 if (_formKey.currentState!.validate()) {
                   loginController.login(
+                      loginController.usernameController.text.trim(),
                     loginController.emailController.text.trim(),
                     loginController.passwordController.text.trim(),
-                    context,
+                    context
                   );
                 } else {
                   Utils.toastMessage("Please fill the form correctly!");

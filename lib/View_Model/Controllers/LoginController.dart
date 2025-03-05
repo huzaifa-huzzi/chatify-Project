@@ -12,7 +12,7 @@ class LoginController extends GetxController {
   final DatabaseReference _ref = FirebaseDatabase.instance.ref().child('user');
 
   var emailController = TextEditingController();
-  var passwordController = TextEditingController()
+  var passwordController = TextEditingController();
   var usernameController = TextEditingController();
   final loading = false.obs;
 
@@ -29,7 +29,7 @@ class LoginController extends GetxController {
         await _ref.child(userCredential.user!.uid).set({
           'uid': userCredential.user!.uid,
           'email': userCredential.user!.email,
-          'username' : userCredential.user!.displayName,
+          'username' : username,
         });
         loading.value = false;
         Get.to(() => const HomePage());
