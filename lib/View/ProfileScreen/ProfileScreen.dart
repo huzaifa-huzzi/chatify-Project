@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
   final ProfileController controller = Get.put(ProfileController());
-  final DatabaseReference _ref = FirebaseDatabase.instance.ref().child("user");
+  final DatabaseReference _ref = FirebaseDatabase.instance.ref('user');
 
   @override
   Widget build(BuildContext context) {
@@ -31,93 +31,89 @@ class ProfileScreen extends StatelessWidget {
             color: Theme.of(context).colorScheme.primaryContainer,
             borderRadius: BorderRadius.circular(20),
           ),
-          child:StreamBuilder(
-        stream: _ref.child(SessionManager().userId.toString()).onValue,
-      builder: (context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        }
+          child: StreamBuilder(
+            stream: _ref.child(SessionManager().userId.toString()).onValue,
+            builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+              if (!snapshot.hasData || snapshot.data?.snapshot.value == null) {
+                return Center(child: Text('No data found.'));
+              }
 
-        if (!snapshot.hasData || snapshot.data == null) {
-          return Center(child: Text('No data found.'));
-        }
+              var data = snapshot.data!.snapshot.value as Map<dynamic, dynamic>?;
+              if (data == null) {
+                return Center(child: Text('Data not available.'));
+              }
 
-        Map<dynamic, dynamic>? map = snapshot.data!.snapshot.value as Map<dynamic, dynamic>?;
-
-        if (map == null) {
-          return Center(child: Text('Data not available'));
-        }
-
-        return Obx(() => Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            /// Profile Picture
-            Stack(
-              alignment: Alignment.bottomRight,
-              children: [
-                CircleAvatar(
-                  radius: 60,
-                  backgroundColor: Colors.white,
-                  backgroundImage: AssetImage(AssetImages.boyPic),
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    shape: BoxShape.circle,
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  /// Profile Picture
+                  Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      CircleAvatar(
+                        radius: 60,
+                        backgroundColor: Colors.white,
+                        backgroundImage: AssetImage(AssetImages.boyPic),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(Icons.edit, color: Colors.white, size: 20),
+                      )
+                    ],
                   ),
-                  child: Icon(Icons.edit, color: Colors.white, size: 20),
-                )
-              ],
-            ),
-            SizedBox(height: 20),
+                  SizedBox(height: 20),
 
-            /// Editable Fields
-            controller.isEditing.value
-                ? Column(
-              children: [
-                ProfileTextFields(controllerText: controller.name),
-                ProfileTextFields(controllerText: controller.bio),
-                ProfileTextFields(controllerText: controller.email),
-              ],
-            )
-                : Column(
-              children: [
-                InfoRows(icon: Icons.person, text: map['username'], isEditable: false),
-                InfoRows(icon: Icons.info, text: controller.bio.value, isEditable: false),
-                InfoRows(icon: Icons.email, text: map['email'], isEditable: false),
-              ],
-            ),
+                  /// Editable Fields
+                  controller.isEditing.value
+                      ? Column(
+                    children: [
+                      ProfileTextFields(controllerText: controller.name),
+                      ProfileTextFields(controllerText: controller.bio),
+                      ProfileTextFields(controllerText: controller.email),
+                    ],
+                  )
+                      : Column(
+                    children: [
+                      InfoRows(icon: Icons.person, text: data['username'] ?? 'N/A', isEditable: false),
+                      InfoRows(icon: Icons.email, text: data['email'] ?? 'N/A', isEditable: false),
+                    ],
+                  ),
 
-            SizedBox(height: 20),
+                  SizedBox(height: 20),
 
-            /// Save / Edit Button
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                PrimaryBtn(
-                  title: controller.isEditing.value ? 'Save' : 'Edit',
-                  onTap: () {
-                    if (controller.isEditing.value) {
-                      controller.saveChanges(
-                        controller.name.value,
-                        controller.bio.value,
-                        controller.email.value,
-                      );
-                    } else {
-                      controller.toggleEditMode();
-                    }
-                  },
-                  icon: Icon(controller.isEditing.value ? Icons.save : Icons.edit),
-                )
-              ],
-            )
-          ],
-        ));
-      },
-    ),
-
-    ),
+                  /// Save / Edit Button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      PrimaryBtn(
+                        title: controller.isEditing.value ? 'Save' : 'Edit',
+                        onTap: () {
+                          if (controller.isEditing.value) {
+                            controller.saveChanges(
+                              controller.name.value,
+                              controller.bio.value,
+                              controller.email.value,
+                            );
+                          } else {
+                            controller.toggleEditMode();
+                          }
+                        },
+                        icon: Icon(controller.isEditing.value ? Icons.save : Icons.edit),
+                      )
+                    ],
+                  )
+                ],
+              );
+            },
+          ),
+        ),
       ),
     );
   }
