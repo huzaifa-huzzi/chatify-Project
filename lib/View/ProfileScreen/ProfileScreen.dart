@@ -1,5 +1,4 @@
 import 'package:chatify_app/Resources/Images/Images.dart';
-import 'package:chatify_app/Resources/Reusable%20Widgets/PrimaryButton.dart';
 import 'package:chatify_app/Resources/Reusable%20Widgets/RoundedButton.dart';
 import 'package:chatify_app/Services/SessionManager.dart';
 import 'package:chatify_app/Utils/Utils.dart';
@@ -16,12 +15,14 @@ class ProfileScreen extends StatelessWidget {
   final ProfileController controller = Get.put(ProfileController());
   final DatabaseReference _ref = FirebaseDatabase.instance.ref('user');
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  bool loading = false;
+
+  ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -50,78 +51,88 @@ class ProfileScreen extends StatelessWidget {
                   }
 
                   var data = snapshot.data!.snapshot.value as Map<dynamic, dynamic>?;
-                  if (data == null) {
-                    return Center(child: Text('Data not available.'));
-                  }
 
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      /// Profile Picture
+                      /// Profile Picture Section
                       Stack(
                         alignment: Alignment.bottomRight,
                         children: [
-                          CircleAvatar(
-                            radius: 60,
-                            backgroundColor: Colors.white,
-                            backgroundImage: AssetImage(AssetImages.boyPic),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              shape: BoxShape.circle,
+                          GestureDetector(
+                            onTap: ()  {
+                              controller.getGalleryImage();
+                            },
+                            child: CircleAvatar(
+                              radius: 60,
+                              backgroundColor: Colors.white,
+                              backgroundImage: controller.image.value != null ? FileImage(controller.image.value!) : null,
+                              child: controller.image.value == null ? Image.asset(AssetImages.boyPic) : null,
                             ),
-                            child: Icon(Icons.edit, color: Colors.white, size: 20),
-                          )
+                          ),
                         ],
                       ),
                       SizedBox(height: 20),
 
                       /// Editable Fields
                       Obx(() {
-                  return controller.isEditing.value
-                  ? Column(
-                  children: [
-                  ProfileTextFields(controllerText: controller.name),
-                  ProfileTextFields(controllerText: controller.bio),
-                  ],
-                  )
-                      : Column(
-                  children: [
-                  InfoRows(icon: Icons.person, text: data['username'] ?? 'N/A', isEditable: true, fieldKey: "username"),
-                  InfoRows(icon: Icons.person, text: controller.bio.value, isEditable: true, fieldKey: "bio"),
-                  InfoRows(icon: Icons.email, text: data['email'] ?? 'N/A', isEditable: false, fieldKey: ""),
-                  ],
-                  );
-                  }),
-                  ],
+                        return controller.isEditing.value
+                            ? Column(
+                          children: [
+                            ProfileTextFields(controllerText: controller.name),
+                            ProfileTextFields(controllerText: controller.bio),
+                          ],
+                        )
+                            : Column(
+                          children: [
+                            InfoRows(
+                              icon: Icons.person,
+                              text: data?['username'] ?? 'N/A',
+                              isEditable: true,
+                              fieldKey: "username",
+                            ),
+                            InfoRows(
+                              icon: Icons.person,
+                              text: controller.bio.value,
+                              isEditable: true,
+                              fieldKey: "bio",
+                            ),
+                            InfoRows(
+                              icon: Icons.email,
+                              text: data?['email'] ?? 'N/A',
+                              isEditable: false,
+                              fieldKey: "",
+                            ),
+                          ],
+                        );
+                      }),
+                    ],
                   );
                 },
               ),
             ),
             SizedBox(height: height * 0.1),
+
             /// Logout Button
             Padding(
               padding: EdgeInsets.all(6),
-              child:  RoundedButton(
+              child: RoundedButton(
                 title: 'Logout',
-                loading: loading,
+                loading: controller.isLoading.value,
                 onTap: () {
-                  _auth.signOut().then((value){
-                    loading = true;
-                    SessionManager().userId ='';
+                  controller.isLoading.value = true;
+                  _auth.signOut().then((value) {
+                    SessionManager().userId = '';
                     Get.to(() => LoginScreen());
-                  }).then((value){
-                    Utils.snackBar('Logout','Logout Successful');
-                    loading = false;
-                  }).onError((error, stackTrace){
+                    Utils.snackBar('Logout', 'Logout Successful');
+                  }).catchError((error) {
                     Utils.toastMessage(error.toString());
-                    loading = false;
+                  }).whenComplete(() {
+                    controller.isLoading.value = false;
                   });
                 },
               ),
-            )
+            ),
           ],
         ),
       ),
