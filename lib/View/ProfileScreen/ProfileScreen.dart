@@ -80,49 +80,28 @@ class ProfileScreen extends StatelessWidget {
 
                       /// Editable Fields
                       Obx(() {
-                        return controller.isEditing.value
-                            ? Column(
-                          children: [
-                            ProfileTextFields(controllerText: controller.name),
-                            ProfileTextFields(controllerText: controller.bio),
-                          ],
-                        )
-                            : Column(
-                          children: [
-                            InfoRows(icon: Icons.person, text: data['username'] ?? 'N/A', isEditable: false),
-                            InfoRows(icon: Icons.person, text: 'Bio', isEditable: false),
-                            InfoRows(icon: Icons.email, text: data['email'] ?? 'N/A', isEditable: false),
-                          ],
-                        );
-                      }),
-
-                      SizedBox(height: 20),
-
-                      /// Save / Edit Button
-                      Obx(() {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            PrimaryBtn(
-                              title: controller.isEditing.value ? 'Save' : 'Edit',
-                              onTap: () {
-                                if (controller.isEditing.value) {
-                                  controller.saveChanges(controller.name.value, controller.bio.value);
-                                } else {
-                                  controller.toggleEditMode();
-                                }
-                              },
-                              icon: Icon(controller.isEditing.value ? Icons.save : Icons.edit),
-                            )
-                          ],
-                        );
-                      })
-                    ],
+                  return controller.isEditing.value
+                  ? Column(
+                  children: [
+                  ProfileTextFields(controllerText: controller.name),
+                  ProfileTextFields(controllerText: controller.bio),
+                  ],
+                  )
+                      : Column(
+                  children: [
+                  InfoRows(icon: Icons.person, text: data['username'] ?? 'N/A', isEditable: true, fieldKey: "username"),
+                  InfoRows(icon: Icons.person, text: controller.bio.value, isEditable: true, fieldKey: "bio"),
+                  InfoRows(icon: Icons.email, text: data['email'] ?? 'N/A', isEditable: false, fieldKey: ""),
+                  ],
+                  );
+                  }),
+                  ],
                   );
                 },
               ),
             ),
             SizedBox(height: height * 0.1),
+            /// Logout Button
             Padding(
               padding: EdgeInsets.all(6),
               child:  RoundedButton(

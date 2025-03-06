@@ -97,9 +97,9 @@ class _LoginFormState extends State<LoginForm> {
               onTap: () {
                 if (_formKey.currentState!.validate()) {
                   loginController.loginFtn(
-                      loginController.emailController.text.trim(),  // Email first
-                      loginController.usernameController.text.trim(), // Then username
-                      loginController.passwordController.text.trim(), // Then password
+                      loginController.emailController.text.trim(),
+                      loginController.usernameController.text.trim(),
+                      loginController.passwordController.text.trim(),
                       context
                   );
 
