@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:chatify_app/Services/SessionManager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -16,24 +15,22 @@ class ProfileController extends GetxController {
   Rxn<File> image = Rxn<File>();
   var isLoading = false.obs;
 
-  final DatabaseReference _ref = FirebaseDatabase.instance.ref('user');
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final ImagePicker picker = ImagePicker();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   /// Update Profile
   void updateProfile(String key, String value) {
-    if (key == "username") {
-      _ref.child(_auth.currentUser!.uid).update({key: value}).then((_) {
-        Utils.snackBar("Success", "Username updated successfully");
+    if (SessionManager().userId!.isNotEmpty) {
+      FirebaseDatabase.instance
+          .ref('user/${SessionManager().userId}')
+          .update({key: value}).then((_) {
+        Utils.snackBar("Success", "$key updated successfully");
       }).catchError((error) {
-        Utils.toastMessage("Error updating username: $error");
+        Utils.snackBar("Error", "Failed to update $key");
       });
-    } else if (key == "bio") {
-      bio.value = value;
-      Utils.snackBar("Success", "Bio updated successfully");
     }
   }
+
 
   /// fetching media from the gallery
   Future<void> getGalleryImage() async {
@@ -61,20 +58,20 @@ class ProfileController extends GetxController {
     isLoading.value = true;
 
     try {
-      // Step 1: Upload the image to Firebase Storage
+
       final storageRef = FirebaseStorage.instance
           .ref()
           .child('ProfilePicture/${SessionManager().userId.toString()}');
 
-      // Upload the image to Firebase Storage
+
       UploadTask uploadTask = storageRef.putFile(image.value!);
 
       TaskSnapshot snapshot = await uploadTask.whenComplete(() => null);
 
-      // Step 2: Get the download URL of the uploaded image
+
       String downloadUrl = await snapshot.ref.getDownloadURL();
 
-      // Step 3: Store the download URL in Firestore
+
       await _firestore.collection('users').doc(SessionManager().userId.toString()).set({
         'profileImage': downloadUrl,
         'timestamp': FieldValue.serverTimestamp(),

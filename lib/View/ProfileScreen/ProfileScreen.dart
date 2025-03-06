@@ -92,11 +92,14 @@ class ProfileScreen extends StatelessWidget {
                               fieldKey: "username",
                             ),
                             InfoRows(
-                              icon: Icons.person,
-                              text: controller.bio.value,
+                              icon: Icons.info,
+                              text: data?['bio'] != null && data?['bio'] != ""
+                                  ? data!['bio']
+                                  : "Hey! There I am on Chatify",
                               isEditable: true,
                               fieldKey: "bio",
                             ),
+
                             InfoRows(
                               icon: Icons.email,
                               text: data?['email'] ?? 'N/A',

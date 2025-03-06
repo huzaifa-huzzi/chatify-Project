@@ -46,7 +46,10 @@ class InfoRows extends StatelessWidget {
   }
 
   void _showEditDialog(BuildContext context, ProfileController controller) {
-    TextEditingController textController = TextEditingController(text: text);
+    TextEditingController textController = TextEditingController(
+      text: text.isNotEmpty ? text : "Hey! There I am on Chatify",
+    );
+
 
     showDialog(
       context: context,
