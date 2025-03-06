@@ -11,10 +11,11 @@ class LoginController extends GetxController {
   final DatabaseReference _ref = FirebaseDatabase.instance.ref().child('user');
 
   var emailController = TextEditingController();
+  var usernameController = TextEditingController();
   var passwordController = TextEditingController();
   final loading = false.obs;
 
-  void login(String email, String password,BuildContext context) async {
+  void login(String email, String password,String username,BuildContext context) async {
     loading.value = true;
 
     try {
@@ -27,6 +28,7 @@ class LoginController extends GetxController {
         await _ref.child(userCredential.user!.uid).set({
           'uid': userCredential.user!.uid,
           'email': userCredential.user!.email,
+          'username' : username,
         });
         loading.value = false;
         Get.to(() => const HomePage());

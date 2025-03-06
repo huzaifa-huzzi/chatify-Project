@@ -126,22 +126,22 @@ class ProfileScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(6),
               child:  RoundedButton(
-                  title: 'Logout',
-                  loading: loading,
-                  onTap: () {
-                     _auth.signOut().then((value){
-                       loading = true;
-                     SessionManager().userId ='';
-                     Get.to(() => LoginScreen());
-                        }).then((value){
-                       Utils.snackBar('Logout','Logout Successful');
-                        loading = false;
-                        }).onError((error, stackTrace){
-                       Utils.toastMessage(error.toString());
-                         loading = false;
-                                    });
-                                },
-                ),
+                title: 'Logout',
+                loading: loading,
+                onTap: () {
+                  _auth.signOut().then((value){
+                    loading = true;
+                    SessionManager().userId ='';
+                    Get.to(() => LoginScreen());
+                  }).then((value){
+                    Utils.snackBar('Logout','Logout Successful');
+                    loading = false;
+                  }).onError((error, stackTrace){
+                    Utils.toastMessage(error.toString());
+                    loading = false;
+                  });
+                },
+              ),
             )
           ],
         ),
