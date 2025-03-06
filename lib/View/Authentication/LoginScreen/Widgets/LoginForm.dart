@@ -96,12 +96,13 @@ class _LoginFormState extends State<LoginForm> {
               loading: loginController.loading.value,
               onTap: () {
                 if (_formKey.currentState!.validate()) {
-                  loginController.login(
-                    loginController.usernameController.text.trim(),
-                    loginController.emailController.text.trim(),
-                    loginController.passwordController.text.trim(),
-                    context
+                  loginController.loginFtn(
+                      loginController.emailController.text.trim(),  // Email first
+                      loginController.usernameController.text.trim(), // Then username
+                      loginController.passwordController.text.trim(), // Then password
+                      context
                   );
+
                 } else {
                   Utils.toastMessage("Please fill the form correctly!");
                 }

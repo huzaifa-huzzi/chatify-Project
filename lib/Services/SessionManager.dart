@@ -9,8 +9,7 @@ class SessionManager {
   String? userId;
 
   // Stream controller for profile picture URL
-  StreamController<String> _profilePictureController = StreamController<
-      String>.broadcast();
+  StreamController<String> _profilePictureController = StreamController<String>.broadcast();
 
   factory SessionManager() {
     return _session;
@@ -47,4 +46,19 @@ class SessionManager {
     await prefs.remove('userId');
   }
 
+
+  Stream<String> profilePictureUrlStream() {
+    return _profilePictureController.stream;
+  }
+
+
+  void updateProfilePictureUrl(String? url) {
+    debugPrint('New profile picture URL: $url');
+    _profilePictureController.add(url ?? '');
+  }
+
+
+  void dispose() {
+    _profilePictureController.close();
+  }
 }

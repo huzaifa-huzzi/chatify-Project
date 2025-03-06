@@ -15,33 +15,40 @@ class LoginController extends GetxController {
   var passwordController = TextEditingController();
   final loading = false.obs;
 
-  void login(String email, String password,String username,BuildContext context) async {
-    loading.value = true;
+  void loginFtn(String email,String username,String password,BuildContext context) async{
+     loading.value = true;
+    try{
+      await _auth.signInWithEmailAndPassword(email: email, password: password).then((value){
+        Get.to(() => HomePage());
+        SessionManager().setUser(value.user!.uid.toString());
+        Utils.snackBar('Login','Login Successful');
+        loading.value = false;
+        _ref.child(value.user!.uid.toString()).set({
+          'username':username,
+          'password':password,
+          'uid':value.user!.uid.toString(),
+          'email':value.user!.email.toString(),
+          'returnSecureToken':true,
 
-    try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      if (userCredential.user != null) {
-        SessionManager().setUser(userCredential.user!.uid.toString());
-        await _ref.child(userCredential.user!.uid).set({
-          'uid': userCredential.user!.uid,
-          'email': userCredential.user!.email,
-          'username' : username,
+        }).then((value){
+          loading.value = false;
+        }).onError((error, stackTrace){
+          Utils.toastMessage(error.toString());
+          loading.value = false;
         });
+      }).onError((error, stackTrace){
+        Utils.toastMessage(error.toString());
         loading.value = false;
-        Get.to(() => const HomePage());
-        Utils.snackBar('Login', 'Login Successful');
-      } else {
-        loading.value = false;
-        Utils.snackBar('Error', 'Login failed. Please try again.');
-      }
-    } catch (e) {
+      });
+
+    }catch(e){
+      Utils.toastMessage(e.toString());
       loading.value = false;
-      Utils.toastMessage( 'Login failed: $e');
     }
+
+
   }
+
 
   @override
   void onClose() {
