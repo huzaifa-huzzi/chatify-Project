@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:chatify_app/Utils/Utils.dart';
 
+
+
 class ProfileController extends GetxController {
   var isEditing = false.obs;
   var name = ''.obs;
