@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:chatify_app/Resources/Colors/Colors.dart';
 import 'package:get/get.dart';
