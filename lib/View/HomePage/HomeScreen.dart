@@ -3,6 +3,7 @@ import 'package:chatify_app/Resources/Images/Images.dart';
 import 'package:chatify_app/Resources/Reusable%20Widgets/chatsList.dart';
 import 'package:chatify_app/Resources/Reusable%20Widgets/myTabBar.dart';
 import 'package:chatify_app/Resources/Strings/Strings.dart';
+import 'package:chatify_app/View/Contact%20Screen/ContactScreen.dart';
 import 'package:chatify_app/View/ProfileScreen/ProfileScreen.dart';
 import 'package:chatify_app/View/UserProfileScreen/UserProfileScreen.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: (){},
+          onPressed: (){
+            Get.to(() => ContactScreen());
+          },
           backgroundColor: Theme.of(context).colorScheme.primary,
          child: Icon(Icons.add,color:AppColors.donBackgroundColor ,),
       ),
