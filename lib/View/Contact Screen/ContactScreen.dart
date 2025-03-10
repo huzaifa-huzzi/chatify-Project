@@ -4,6 +4,7 @@ import 'package:chatify_app/Resources/Reusable%20Widgets/chatsList.dart';
 import 'package:chatify_app/View/Contact%20Screen/Widget/NewContactTile.dart';
 import 'package:chatify_app/View/chatPage/Widgets/ChatsWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 class ContactScreen extends StatefulWidget {
@@ -14,6 +15,9 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
+
+   RxBool isSearchEnable = false.obs;
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -23,13 +27,42 @@ class _ContactScreenState extends State<ContactScreen> {
         title: Text('Select Contact'),
        backgroundColor: AppColors.primaryColor,
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.search)),
+         Obx(() =>  IconButton(onPressed: (){
+           isSearchEnable.value = !isSearchEnable.value;
+         }, icon: isSearchEnable.value ? Icon(Icons.close) : Icon(Icons.search) ),)
         ],
      ),
       body: Padding(
           padding: EdgeInsets.all(10),
          child: ListView(
            children: [
+             SizedBox(height:  height * 0.02,),
+            Obx(() =>
+            isSearchEnable.value ?  Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(context).colorScheme.primaryContainer,
+              ),
+              child: Row(
+                children: [
+
+                  Expanded(
+                      child: TextFormField(
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (value) => {
+                          print(value),
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Search Contact',
+                          prefixIcon: Icon(Icons.search),
+                        ),
+                      )
+                  )
+                ],
+              ),
+            ) : SizedBox(),
+            ),
+             SizedBox(height:  height * 0.02,),
              Column(
                children: [
                  SizedBox(height: height * 0.01,),
