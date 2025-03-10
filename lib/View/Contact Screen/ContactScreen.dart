@@ -1,8 +1,6 @@
 import 'package:chatify_app/Resources/Colors/Colors.dart';
 import 'package:chatify_app/Resources/Images/Images.dart';
-import 'package:chatify_app/Resources/Reusable%20Widgets/chatsList.dart';
 import 'package:chatify_app/View/Contact%20Screen/Widget/NewContactTile.dart';
-import 'package:chatify_app/View/chatPage/Widgets/ChatsWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
