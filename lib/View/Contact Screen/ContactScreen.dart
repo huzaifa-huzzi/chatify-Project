@@ -11,6 +11,21 @@ class ContactScreen extends StatefulWidget {
 class _ContactScreenState extends State<ContactScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+     appBar: AppBar(
+        title: Text('Select Contact'),
+        actions: [
+          IconButton(onPressed: (){}, icon: Icon(Icons.search)),
+        ],
+     ),
+      body: Padding(
+          padding: EdgeInsets.all(10),
+         child: Column(
+           children: [
+               
+           ],
+         ),
+      ),
+    );
   }
 }
