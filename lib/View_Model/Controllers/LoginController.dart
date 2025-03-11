@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class LoginController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -15,40 +16,48 @@ class LoginController extends GetxController {
   var passwordController = TextEditingController();
   final loading = false.obs;
 
-  void loginFtn(String email,String username,String password,BuildContext context) async{
-     loading.value = true;
-    try{
-      await _auth.signInWithEmailAndPassword(email: email, password: password).then((value){
-        Get.to(() => HomePage());
-        SessionManager().setUser(value.user!.uid.toString());
-        Utils.snackBar('Login','Login Successful');
-        loading.value = false;
-        _ref.child(value.user!.uid.toString()).set({
-          'username':username,
-          'password':password,
-          'uid':value.user!.uid.toString(),
-          'email':value.user!.email.toString(),
-          'returnSecureToken':true,
+  void loginFtn(String email, String username, String password, BuildContext context) async {
+    loading.value = true;
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password).then((value) async {
+        String userId = value.user!.uid.toString();
+        String lastLoginTime = DateFormat('h:mm a').format(DateTime.now());
 
-        }).then((value){
+        Get.to(() => HomePage());
+
+        SessionManager().setUser(userId);
+
+        Utils.snackBar('Login', 'Login Successful');
+        loading.value = false;
+
+        // 🔥 Fix: Fetch username if it's null
+        DatabaseEvent event = await _ref.child(userId).once();
+        Map<dynamic, dynamic>? userData = event.snapshot.value as Map<dynamic, dynamic>?;
+
+        String storedUsername = userData?['username'] ?? username;
+
+        // 🔥 Use `.update()` to prevent overwriting data
+        _ref.child(userId).update({
+          'username': storedUsername, // Use stored username if exists
+          'uid': userId,
+          'email': value.user!.email ?? '',
+          'returnSecureToken': true,
+          'lastLogin': lastLoginTime,
+        }).then((_) {
           loading.value = false;
-        }).onError((error, stackTrace){
+        }).onError((error, stackTrace) {
           Utils.toastMessage(error.toString());
           loading.value = false;
         });
-      }).onError((error, stackTrace){
+      }).onError((error, stackTrace) {
         Utils.toastMessage(error.toString());
         loading.value = false;
       });
-
-    }catch(e){
+    } catch (e) {
       Utils.toastMessage(e.toString());
       loading.value = false;
     }
-
-
   }
-
 
   @override
   void onClose() {

@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 
 
@@ -32,18 +33,18 @@ class SignUpController extends GetxController {
         return;
       }
 
-      await auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      ).then((value) async {
-
+      await auth.createUserWithEmailAndPassword(email: email, password: password).then((value) async {
         SessionManager().setUser(value.user!.uid.toString());
+
+        // Get current timestamp
+        String createdAt = DateFormat('h:mm a').format(DateTime.now());
 
         await ref.child(value.user!.uid.toString()).set({
           'uid': value.user!.uid.toString(),
           'email': email,
           'username': username,
           'returnSecureToken': true,
+          'createdAt': createdAt,
         });
 
         Utils.snackBar('Signup', 'Signup successful');
@@ -57,6 +58,8 @@ class SignUpController extends GetxController {
       loading.value = false;
     }
   }
+
+
 
   @override
   void onClose() {
