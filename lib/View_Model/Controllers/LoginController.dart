@@ -30,18 +30,8 @@ class LoginController extends GetxController {
         Utils.snackBar('Login', 'Login Successful');
         loading.value = false;
 
-        // 🔥 Fix: Fetch username if it's null
-        DatabaseEvent event = await _ref.child(userId).once();
-        Map<dynamic, dynamic>? userData = event.snapshot.value as Map<dynamic, dynamic>?;
-
-        String storedUsername = userData?['username'] ?? username;
-
-        // 🔥 Use `.update()` to prevent overwriting data
+        // 🔥 Only update lastLogin field
         _ref.child(userId).update({
-          'username': storedUsername, // Use stored username if exists
-          'uid': userId,
-          'email': value.user!.email ?? '',
-          'returnSecureToken': true,
           'lastLogin': lastLoginTime,
         }).then((_) {
           loading.value = false;

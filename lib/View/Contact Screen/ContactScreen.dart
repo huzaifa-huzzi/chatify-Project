@@ -1,13 +1,9 @@
 import 'package:chatify_app/Resources/Colors/Colors.dart';
 import 'package:chatify_app/Resources/Images/Images.dart';
-import 'package:chatify_app/Resources/Reusable%20Widgets/chatsList.dart';
-import 'package:chatify_app/Services/SessionManager.dart';
 import 'package:chatify_app/View/Contact%20Screen/Widget/NewContactTile.dart';
-import 'package:chatify_app/View/chatPage/Widgets/ChatsWidget.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:chatify_app/View_Model/Controllers/ContactController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({super.key});
@@ -17,94 +13,114 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
-
-   RxBool isSearchEnable = false.obs;
-   final DatabaseReference _ref = FirebaseDatabase.instance.ref('user');
+  final ContactController contactController = Get.put(ContactController());
+  final TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
+    final width = MediaQuery.sizeOf(context).width;
+
     return Scaffold(
-     appBar: AppBar(
+      appBar: AppBar(
         title: Text('Select Contact'),
-       backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.primaryColor,
         actions: [
-          IconButton(onPressed: (){
-            isSearchEnable.value = !isSearchEnable.value;
-          }, icon: isSearchEnable.value ? Icon(Icons.close) : Icon(Icons.search) ),
+          IconButton(
+            onPressed: () {
+              contactController.toggleSearch();
+              if (!contactController.isSearchEnabled.value) {
+                searchController.clear();
+                contactController.resetFilter();
+              }
+            },
+            icon: Obx(() => Icon(
+              contactController.isSearchEnabled.value ? Icons.close : Icons.search,
+            )),
+          ),
         ],
-     ),
+      ),
       body: Padding(
-          padding: EdgeInsets.all(10),
-         child: ListView(
-           children: [
-             SizedBox(height:  height * 0.02,),
-            Obx(() =>
-            isSearchEnable.value ?  Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Theme.of(context).colorScheme.primaryContainer,
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Search Bar
+            Obx(() => contactController.isSearchEnabled.value
+                ? Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: TextField(
+                controller: searchController,
+                onChanged: contactController.filterUsers,
+                decoration: InputDecoration(
+                  hintText: 'Search Contact',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
               ),
-              child: Row(
-                children: [
+            )
+                : SizedBox()),
 
-                  Expanded(
-                      child: TextFormField(
-                        textInputAction: TextInputAction.done,
-                        onFieldSubmitted: (value) => {
-                          print(value),
-                        },
-                        decoration: InputDecoration(
-                          hintText: 'Search Contact',
-                          prefixIcon: Icon(Icons.search),
-                        ),
-                      )
-                  )
-                ],
-              ),
-            ) : SizedBox(),
+            // New Contact & Group Buttons
+            NewContactTile(btnName: 'New Contact', icon: Icons.person_add, onTap: () {}),
+            SizedBox(height: height * 0.01),
+            NewContactTile(btnName: 'New Group', icon: Icons.group_add, onTap: () {}),
+            SizedBox(height: height * 0.04),
+
+            Text('Contacts on Chatify', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            SizedBox(height: height * 0.02),
+
+            // Contact List
+            Expanded(
+              child: Obx(() {
+                if (contactController.filteredUsers.isEmpty) {
+                  return Center(child: Text('No contacts available.'));
+                }
+
+                return ListView.builder(
+                  itemCount: contactController.filteredUsers.length,
+                  itemBuilder: (context, index) {
+                    final user = contactController.filteredUsers[index];
+                    final String name = user['username']?.toString() ?? 'Unknown';
+                    final String imageUrl = user['profilePic']?.toString() ?? AssetImages.boyPic;
+
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(35),
+                            child: Image.network(
+                              imageUrl,
+                              width: 70,
+                              height: 70,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(AssetImages.boyPic, width: 70, height: 70);
+                              },
+                            ),
+                          ),
+                          SizedBox(width: width * 0.02),
+                          Text(
+                            name,
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }),
             ),
-             SizedBox(height:  height * 0.02,),
-             Column(
-               children: [
-                 SizedBox(height: height * 0.01,),
-                 NewContactTile(btnName: 'New Contact', icon:Icons.person_add, onTap: (){}),
-                 SizedBox(height: height * 0.01,),
-                 NewContactTile(btnName: 'New Group', icon:Icons.group_add, onTap: (){}),
-                 SizedBox(height: height * 0.04,),
-                 Row(
-                   children: [
-                     Text('Contacts on chatify'),
-                   ],
-                 ),
-                 StreamBuilder(
-                     stream:_ref.child(SessionManager().userId.toString()).onValue ,
-                     builder: (context, AsyncSnapshot<DatabaseEvent> snapshot){
-
-                       if (snapshot.connectionState == ConnectionState.waiting) {
-                         return Center(child: CircularProgressIndicator());
-                       }
-                       if (!snapshot.hasData || snapshot.data?.snapshot.value == null) {
-                         return Center(child: Text('No data found.'));
-                       }
-
-                       var data = snapshot.data!.snapshot.value as Map<dynamic, dynamic>?;
-
-                       return    SizedBox(
-                         height: 200,  // Set an appropriate height
-                         child: ChatsList( imageurl: "", time: data?['createdAt'], name: data?['username'] ?? 'N/A',),
-                       );
-
-                     }
-                 )
-
-
-
-               ],
-             ),
-           ],
-         ),
+          ],
+        ),
       ),
     );
   }

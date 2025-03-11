@@ -25,7 +25,6 @@ class SignUpController extends GetxController {
 
   void signUpFtn(String email, String username, String password, BuildContext context) async {
     loading.value = true;
-
     try {
       if (password.length < 6) {
         Utils.toastMessage("Password must be at least 6 characters long");
@@ -33,18 +32,30 @@ class SignUpController extends GetxController {
         return;
       }
 
-      await auth.createUserWithEmailAndPassword(email: email, password: password).then((value) async {
-        SessionManager().setUser(value.user!.uid.toString());
-
-        // Get current timestamp
+      await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      ).then((value) async {
+        String userId = value.user!.uid.toString();
         String createdAt = DateFormat('h:mm a').format(DateTime.now());
 
-        await ref.child(value.user!.uid.toString()).set({
-          'uid': value.user!.uid.toString(),
+        SessionManager().setUser(userId);
+
+        // Store user details
+        await ref.child(userId).set({
+          'uid': userId,
           'email': email,
           'username': username,
           'returnSecureToken': true,
-          'createdAt': createdAt,
+          'createdAt': createdAt, // Save timestamp
+        });
+
+        // Store user in chats node
+        await FirebaseDatabase.instance.ref('chats/$userId').set({
+          'uid': userId,
+          'username': username,
+          'lastLogin': createdAt,
+          'imageurl': "", // Default empty image
         });
 
         Utils.snackBar('Signup', 'Signup successful');
