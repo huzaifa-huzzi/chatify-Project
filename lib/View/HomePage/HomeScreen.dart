@@ -84,6 +84,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       body:TabBarView(
         controller: tabController,
           children: [
+            ChatsList(),
             ListView(
               children: [
                 ListTile(
