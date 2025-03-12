@@ -9,7 +9,6 @@ import 'package:uuid/uuid.dart';
 class ChatController extends GetxController {
 
   final auth = FirebaseAuth.instance ;
-  final DatabaseReference _ref = FirebaseDatabase.instance.ref('user');
   final db = FirebaseFirestore.instance;
   RxBool loading = false.obs;
   var uuid = Uuid();
@@ -66,6 +65,8 @@ class ChatController extends GetxController {
 
     loading.value = false;
   }
+  /// Get message
+
 
 
 
