@@ -1,23 +1,30 @@
+import 'package:chatify_app/Model/ChatModel.dart';
 import 'package:chatify_app/Resources/Images/Images.dart';
+import 'package:chatify_app/Services/SessionManager.dart';
 import 'package:chatify_app/View/chatPage/Widgets/ChatsWidget.dart';
+import 'package:chatify_app/View_Model/Controllers/chatController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-
+import 'package:get/get.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+  final String userId;
+  final String userName;
+
+  const ChatPage({Key? key, required this.userId, required this.userName}) : super(key: key);
 
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
-class _ChatPageState extends State<ChatPage> {
 
-  
+class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
+    final ChatController chatController = Get.put(ChatController());
+    TextEditingController messageController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
@@ -28,72 +35,82 @@ class _ChatPageState extends State<ChatPage> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Taha',style: Theme.of(context).textTheme.bodyLarge,),
-            Text('Online',style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Colors.white),),
+            Text(widget.userName, style: Theme.of(context).textTheme.bodyLarge),
+            Text('Online', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Colors.white)),
           ],
         ),
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.phone)),
-          IconButton(onPressed: (){}, icon: Icon(Icons.video_call))
+          IconButton(onPressed: () {}, icon: Icon(Icons.phone)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.video_call)),
         ],
       ),
-     floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         margin: EdgeInsets.all(20),
-        padding: EdgeInsets.symmetric(vertical: height * 0.01,horizontal: width * 0.015),
+        padding: EdgeInsets.symmetric(vertical: height * 0.01, horizontal: width * 0.015),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
           color: Theme.of(context).colorScheme.primary,
         ),
         child: Row(
           children: [
-            SvgPicture.asset(AssetImages.mic,width: 30,),
-              SizedBox(width: width * 0.01,),
-              Expanded(child: TextField(
+            SvgPicture.asset(AssetImages.mic, width: 30),
+            SizedBox(width: width * 0.01),
+            Expanded(
+              child: TextField(
+                controller: messageController,
                 decoration: InputDecoration(
                   filled: false,
-                  hintText: "Type mess..."
+                  hintText: "Type mess...",
                 ),
-              )),
-            SizedBox(width: width * 0.01,),
-            SvgPicture.asset(AssetImages.imageOpener,width: 30,),
-            SizedBox(width: width * 0.01,),
-            SvgPicture.asset(AssetImages.send,width: 30,),
+              ),
+            ),
+            SizedBox(width: width * 0.01),
+            SvgPicture.asset(AssetImages.imageOpener, width: 30),
+            SizedBox(width: width * 0.01),
+            InkWell(
+                onTap: (){
+
+                  if(messageController.text.isNotEmpty){
+                    chatController.sendMessages(SessionManager().userId.toString(), messageController.text);
+                    messageController.clear();
+                  }
+                },
+                child: SvgPicture.asset(AssetImages.send, width: 30)),
           ],
         ),
       ),
       body: Padding(
-          padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(10),
         child: ListView(
           children: [
             Column(
               children: [
                 ChatsWidget(
                   imageUrl: '',
-                  message: 'HEllo How are you ?',
+                  message: 'Hello, how are you?',
                   isComing: true,
-                  time: '10:10 Am',
+                  time: '10:10 AM',
                   status: 'Read',
                 ),
                 ChatsWidget(
                   imageUrl: '',
-                  message: 'HEllo How are you ?',
+                  message: 'I am good, thanks!',
                   isComing: false,
-                  time: '10:10 Am',
+                  time: '10:11 AM',
                   status: 'Read',
                 ),
                 ChatsWidget(
-                  message: 'HEllo How are you ?',
+                  message: 'That’s great to hear!',
                   imageUrl: AssetImages.boyPic,
                   isComing: false,
-                  time: '10:10 Am',
+                  time: '10:12 AM',
                   status: 'Read',
                 ),
               ],
             ),
           ],
-
-        )
+        ),
       ),
     );
   }

@@ -15,7 +15,6 @@ class ChatsList extends StatelessWidget {
 
     return InkWell(
       onTap: (){
-        Get.to(ChatPage());
       },
       child: Expanded(
         child: Padding(

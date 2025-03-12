@@ -1,7 +1,10 @@
 import 'package:chatify_app/Resources/Colors/Colors.dart';
 import 'package:chatify_app/Resources/Images/Images.dart';
+import 'package:chatify_app/Services/SessionManager.dart';
 import 'package:chatify_app/View/Contact%20Screen/Widget/NewContactTile.dart';
+import 'package:chatify_app/View/chatPage/ChatPage.dart';
 import 'package:chatify_app/View_Model/Controllers/ContactController.dart';
+import 'package:chatify_app/View_Model/Controllers/chatController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +18,7 @@ class ContactScreen extends StatefulWidget {
 class _ContactScreenState extends State<ContactScreen> {
   final ContactController contactController = Get.put(ContactController());
   final TextEditingController searchController = TextEditingController();
-
+  final  chatController = Get.put(ChatController());
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
@@ -72,7 +75,7 @@ class _ContactScreenState extends State<ContactScreen> {
             Text('Contacts on Chatify', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             SizedBox(height: height * 0.02),
 
-            // Contact List
+            /// Contact List
             Expanded(
               child: Obx(() {
                 if (contactController.filteredUsers.isEmpty) {
@@ -85,34 +88,43 @@ class _ContactScreenState extends State<ContactScreen> {
                     final user = contactController.filteredUsers[index];
                     final String name = user['username']?.toString() ?? 'Unknown';
                     final String imageUrl = user['profilePic']?.toString() ?? AssetImages.boyPic;
+                    final String currentUserId = SessionManager().userId.toString();
 
-                    return Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(35),
-                            child: Image.network(
-                              imageUrl,
-                              width: 70,
-                              height: 70,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Image.asset(AssetImages.boyPic, width: 70, height: 70);
-                              },
+                    return InkWell(
+                      onTap: () {
+                        Get.to(() => ChatPage(
+                          userId: user['uid'],
+                          userName: name,
+                        ));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(35),
+                              child: Image.network(
+                                imageUrl,
+                                width: 70,
+                                height: 70,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(AssetImages.boyPic, width: 70, height: 70);
+                                },
+                              ),
                             ),
-                          ),
-                          SizedBox(width: width * 0.02),
-                          Text(
-                            name,
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
-                          ),
-                        ],
+                            SizedBox(width: width * 0.02),
+                            Text(
+                              name,
+                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
