@@ -6,6 +6,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
+
+
 class ChatController extends GetxController {
 
   final auth = FirebaseAuth.instance ;
