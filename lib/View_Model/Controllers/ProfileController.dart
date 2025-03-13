@@ -10,6 +10,8 @@ import 'package:chatify_app/Utils/Utils.dart';
 
 
 
+
+
 class ProfileController extends GetxController {
   var isEditing = false.obs;
   var name = ''.obs;
