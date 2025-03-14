@@ -1,6 +1,8 @@
 import 'package:chatify_app/Model/ChatModel.dart';
+import 'package:chatify_app/Model/ChatRoomModel.dart';
 import 'package:chatify_app/Resources/Images/Images.dart';
 import 'package:chatify_app/Services/SessionManager.dart';
+import 'package:chatify_app/View/UserProfileScreen/UserProfileScreen.dart';
 import 'package:chatify_app/View/chatPage/Widgets/ChatsWidget.dart';
 import 'package:chatify_app/View_Model/Controllers/ProfileController.dart';
 import 'package:chatify_app/View_Model/Controllers/chatController.dart';
@@ -30,17 +32,27 @@ class _ChatPageState extends State<ChatPage> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: Image.asset(AssetImages.boyPic),
+        leading: InkWell(
+          onTap: (){
+            Get.to(() => UserProfileScreen());
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Image.asset(AssetImages.boyPic),
+          ),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(widget.userName, style: Theme.of(context).textTheme.bodyLarge),
-            Text('Online', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Colors.white)),
-          ],
+        title: InkWell(
+          onTap: (){
+            Get.to(() => UserProfileScreen());
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(widget.userName, style: Theme.of(context).textTheme.bodyLarge),
+              Text('Online', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Colors.white)),
+            ],
+          ),
         ),
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.phone)),
@@ -75,7 +87,7 @@ class _ChatPageState extends State<ChatPage> {
                 onTap: (){
 
                   if(messageController.text.isNotEmpty){
-                    chatController.sendMessages(SessionManager().userId.toString(), messageController.text);
+                    chatController.sendMessages(SessionManager().userId.toString(), messageController.text,UserModel());
                     messageController.clear();
                   }
                 },
