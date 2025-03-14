@@ -6,6 +6,7 @@ import 'package:chatify_app/View_Model/Controllers/chatController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
   final String userId;
@@ -81,36 +82,35 @@ class _ChatPageState extends State<ChatPage> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(10),
-        child: ListView(
-          children: [
-            Column(
-              children: [
-                ChatsWidget(
-                  imageUrl: '',
-                  message: 'Hello, how are you?',
-                  isComing: true,
-                  time: '10:10 AM',
-                  status: 'Read',
-                ),
-                ChatsWidget(
-                  imageUrl: '',
-                  message: 'I am good, thanks!',
-                  isComing: false,
-                  time: '10:11 AM',
-                  status: 'Read',
-                ),
-                ChatsWidget(
-                  message: 'That’s great to hear!',
-                  imageUrl: AssetImages.boyPic,
-                  isComing: false,
-                  time: '10:12 AM',
-                  status: 'Read',
-                ),
-              ],
-            ),
-          ],
-        ),
+        padding: EdgeInsets.only(bottom: 70,top: 10,left: 10,right: 10),
+        child: StreamBuilder<List<ChatModel>>(
+            stream: chatController.getMessages(SessionManager().userId.toString()),
+            builder: (context,snapshot){
+               if(snapshot.connectionState == ConnectionState.waiting){
+                 return Center(child: CircularProgressIndicator(),);
+               }
+               if(snapshot.hasError){
+                 return Center(child: Text("Error: ${snapshot.error}"),);
+              }
+               if(snapshot.hasData){
+                 return ListView.builder(
+                 reverse: true,
+                 itemCount: snapshot.data!.length,
+                 itemBuilder: (context,index){
+
+                   return ChatsWidget(
+              imageUrl: '',
+              message: snapshot.data![index].message!,
+              isComing: true,
+              time: '9 Am',
+              status: 'Read',
+              );
+              }
+                 );
+              }
+               return Container();
+            }
+        )
       ),
     );
   }

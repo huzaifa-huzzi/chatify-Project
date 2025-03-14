@@ -69,6 +69,13 @@ class ChatController extends GetxController {
     loading.value = false;
   }
   /// Get message
+   Stream<List<ChatModel>> getMessages(String targetUserId,){
+    String roomId = getRoomId(targetUserId);
+    return db.collection('chats').doc(roomId).collection('messages').orderBy("timestamp",descending: true).snapshots().map((
+       snapshot
+    ) => snapshot.docs.map((doc) => ChatModel.fromJson(doc.data())).toList());
+
+   }
 
 
 
