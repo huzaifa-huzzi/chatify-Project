@@ -2,6 +2,7 @@ import 'package:chatify_app/Model/ChatModel.dart';
 import 'package:chatify_app/Resources/Images/Images.dart';
 import 'package:chatify_app/Services/SessionManager.dart';
 import 'package:chatify_app/View/chatPage/Widgets/ChatsWidget.dart';
+import 'package:chatify_app/View_Model/Controllers/ProfileController.dart';
 import 'package:chatify_app/View_Model/Controllers/chatController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,6 +25,7 @@ class _ChatPageState extends State<ChatPage> {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     final ChatController chatController = Get.put(ChatController());
+    final ProfileController profileController =Get.put(ProfileController());
     TextEditingController messageController = TextEditingController();
 
     return Scaffold(
@@ -101,8 +103,8 @@ class _ChatPageState extends State<ChatPage> {
                    return ChatsWidget(
               imageUrl: '',
               message: snapshot.data![index].message!,
-              isComing: true,
-              time: '9 Am',
+              isComing: snapshot.data![index].receiverId == profileController.name.value ,
+              time:"9AM",
               status: 'Read',
               );
               }

@@ -1,5 +1,4 @@
 import 'package:chatify_app/Model/ChatModel.dart';
-import 'package:chatify_app/Services/SessionManager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
