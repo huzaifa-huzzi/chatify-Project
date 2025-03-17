@@ -5,12 +5,10 @@ import 'package:chatify_app/Resources/Reusable%20Widgets/myTabBar.dart';
 import 'package:chatify_app/Resources/Strings/Strings.dart';
 import 'package:chatify_app/View/Contact%20Screen/ContactScreen.dart';
 import 'package:chatify_app/View/ProfileScreen/ProfileScreen.dart';
-import 'package:chatify_app/View/UserProfileScreen/UserProfileScreen.dart';
 import 'package:chatify_app/View_Model/Controllers/ContactController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 
 

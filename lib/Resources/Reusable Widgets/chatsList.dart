@@ -1,4 +1,3 @@
-import 'package:chatify_app/Model/ChatRoomModel.dart';
 import 'package:chatify_app/Resources/Images/Images.dart';
 import 'package:chatify_app/Services/SessionManager.dart';
 import 'package:chatify_app/View/chatPage/ChatPage.dart';
