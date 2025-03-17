@@ -65,12 +65,17 @@ class ProfileScreen extends StatelessWidget {
                             onTap: ()  {
                               controller.getGalleryImage();
                             },
-                            child: CircleAvatar(
-                              radius: 60,
-                              backgroundColor: Colors.white,
-                              backgroundImage: controller.image.value != null ? FileImage(controller.image.value!) : null,
-                              child: controller.image.value == null ? Image.asset(AssetImages.boyPic) : null,
-                            ),
+                            child: Obx(() {
+                              return CircleAvatar(
+                                radius: 60,
+                                backgroundColor: Colors.white,
+                                backgroundImage: controller.image.value != null
+                                    ? FileImage(controller.image.value!) as ImageProvider
+                                    : AssetImage(AssetImages.boyPic),
+                                child: controller.image.value == null ? Image.asset(AssetImages.boyPic) : null,
+                              );
+                            }),
+
                           ),
                         ],
                       ),

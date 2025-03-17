@@ -44,6 +44,7 @@ class ProfileController extends GetxController {
 
       if (pickedFile != null) {
         image.value = File(pickedFile.path);
+        update();
       } else {
         Get.snackbar('No Image', 'No image selected');
       }
