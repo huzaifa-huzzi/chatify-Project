@@ -11,7 +11,8 @@ import 'package:get/get.dart';
 
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+  final String username ;
+  const UserProfileScreen({super.key, required this.username});
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -26,6 +27,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('User Profile'),
@@ -64,13 +66,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('Huzaifa Khan',style: Theme.of(context).textTheme.bodyLarge,)
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('huzaifa@gmail.com',style: Theme.of(context).textTheme.bodyLarge,)
+                                Text(widget.username,style: Theme.of(context).textTheme.bodyLarge,)
                               ],
                             ),
                             SizedBox(height:  height * 0.03,),

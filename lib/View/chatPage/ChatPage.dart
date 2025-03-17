@@ -29,11 +29,14 @@ class _ChatPageState extends State<ChatPage> {
     final ProfileController profileController =Get.put(ProfileController());
     TextEditingController messageController = TextEditingController();
 
+
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
           onTap: (){
-            Get.to(() => UserProfileScreen());
+            Get.to(() => UserProfileScreen(
+              username: widget.userName,
+            ));
           },
           child: Padding(
             padding: const EdgeInsets.only(left: 10),
@@ -43,7 +46,9 @@ class _ChatPageState extends State<ChatPage> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: InkWell(
           onTap: (){
-            Get.to(() => UserProfileScreen());
+            Get.to(() => UserProfileScreen(
+              username: widget.userName,
+            ));
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,35 +100,35 @@ class _ChatPageState extends State<ChatPage> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.only(bottom: 70,top: 10,left: 10,right: 10),
-        child: StreamBuilder<List<ChatModel>>(
-            stream: chatController.getMessages(SessionManager().userId.toString()),
-            builder: (context,snapshot){
-               if(snapshot.connectionState == ConnectionState.waiting){
-                 return Center(child: CircularProgressIndicator(),);
-               }
-               if(snapshot.hasError){
-                 return Center(child: Text("Error: ${snapshot.error}"),);
-              }
-               if(snapshot.hasData){
-                 return ListView.builder(
-                 reverse: true,
-                 itemCount: snapshot.data!.length,
-                 itemBuilder: (context,index){
+          padding: EdgeInsets.only(bottom: 70,top: 10,left: 10,right: 10),
+          child: StreamBuilder<List<ChatModel>>(
+              stream: chatController.getMessages(SessionManager().userId.toString()),
+              builder: (context,snapshot){
+                if(snapshot.connectionState == ConnectionState.waiting){
+                  return Center(child: CircularProgressIndicator(),);
+                }
+                if(snapshot.hasError){
+                  return Center(child: Text("Error: ${snapshot.error}"),);
+                }
+                if(snapshot.hasData){
+                  return ListView.builder(
+                      reverse: true,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context,index){
 
-                   return ChatsWidget(
-              imageUrl: '',
-              message: snapshot.data![index].message!,
-              isComing: snapshot.data![index].receiverId == profileController.name.value ,
-              time:"9AM",
-              status: 'Read',
-              );
+                        return ChatsWidget(
+                          imageUrl: '',
+                          message: snapshot.data![index].message!,
+                          isComing: snapshot.data![index].receiverId == profileController.name.value ,
+                          time:"9AM",
+                          status: 'Read',
+                        );
+                      }
+                  );
+                }
+                return Container();
               }
-                 );
-              }
-               return Container();
-            }
-        )
+          )
       ),
     );
   }
