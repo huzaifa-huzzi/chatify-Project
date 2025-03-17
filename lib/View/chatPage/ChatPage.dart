@@ -11,10 +11,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ChatPage extends StatefulWidget {
-  final String userId;
-  final String userName;
+   final String userId;
+   final String userName;
 
-  const ChatPage({Key? key, required this.userId, required this.userName}) : super(key: key);
+   ChatPage({Key? key,  required this.userId,  required this.userName}) : super(key: key);
 
   @override
   State<ChatPage> createState() => _ChatPageState();

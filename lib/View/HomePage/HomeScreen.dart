@@ -6,6 +6,7 @@ import 'package:chatify_app/Resources/Strings/Strings.dart';
 import 'package:chatify_app/View/Contact%20Screen/ContactScreen.dart';
 import 'package:chatify_app/View/ProfileScreen/ProfileScreen.dart';
 import 'package:chatify_app/View/UserProfileScreen/UserProfileScreen.dart';
+import 'package:chatify_app/View_Model/Controllers/ContactController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -24,6 +25,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late TabController tabController;
+  final ContactController controller = Get.put( ContactController());
 
   @override
   void initState() {
@@ -59,7 +61,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              controller.getChatRoomList();
+            },
             icon: const Icon(Icons.search),
           ),
           IconButton(
