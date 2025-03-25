@@ -48,6 +48,7 @@ class ContactController extends GetxController {
     filteredUsers.assignAll(users);
   }
 
+
   /// getting chatRoomList
   Future<void> getChatRoomList() async {
     List<ChatRoomModel> tempChatRoomList = [];
