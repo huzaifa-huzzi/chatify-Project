@@ -1,8 +1,9 @@
+
+
 class AppString {
 
   static const appName = 'Chatify';
 }
-
 
 class SplashScreenTexts {
 
