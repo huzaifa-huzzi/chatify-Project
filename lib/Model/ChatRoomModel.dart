@@ -1,3 +1,4 @@
+
 class ChatRoomModel {
   String? id;
   UserModel? sender;
