@@ -51,7 +51,6 @@ class ChatRoomModel {
   }
 }
 
-
 class UserModel {
 
   UserModel();
@@ -64,7 +63,6 @@ class UserModel {
     return {};
   }
 }
-
 
 class MessageModel {
 
