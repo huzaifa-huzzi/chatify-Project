@@ -1,6 +1,5 @@
 
 
-
 class ChatModel {
   String? id;
   String? message;
@@ -40,4 +39,3 @@ class ChatModel {
     );
   }
 }
-
