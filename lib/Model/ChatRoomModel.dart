@@ -70,6 +70,7 @@ class MessageModel {
 
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel();
+
   }
 
   Map<String, dynamic> toJson() {
