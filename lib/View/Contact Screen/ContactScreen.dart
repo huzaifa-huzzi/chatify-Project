@@ -17,6 +17,7 @@ class ContactScreen extends StatefulWidget {
   State<ContactScreen> createState() => _ContactScreenState();
 }
 
+
 class _ContactScreenState extends State<ContactScreen> {
   final ContactController contactController = Get.put(ContactController());
   final TextEditingController searchController = TextEditingController();
