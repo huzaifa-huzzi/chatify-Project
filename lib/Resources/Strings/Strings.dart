@@ -5,6 +5,7 @@ class AppString {
   static const appName = 'Chatify';
 }
 
+
 class SplashScreenTexts {
 
   static const appName = 'Chatify';
