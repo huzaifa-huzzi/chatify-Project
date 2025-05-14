@@ -63,7 +63,6 @@ class UserModel {
   }
 }
 
-
 class MessageModel {
 
   MessageModel();
