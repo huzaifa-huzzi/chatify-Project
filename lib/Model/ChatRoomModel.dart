@@ -50,7 +50,6 @@ class ChatRoomModel {
   }
 }
 
-
 class UserModel {
 
   UserModel();
