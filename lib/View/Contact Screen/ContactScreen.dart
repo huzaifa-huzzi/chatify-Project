@@ -8,6 +8,7 @@ import 'package:chatify_app/View_Model/Controllers/chatController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
 class ContactScreen extends StatefulWidget {
   const ContactScreen({super.key});
 
