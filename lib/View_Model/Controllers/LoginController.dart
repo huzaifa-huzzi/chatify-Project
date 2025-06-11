@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 
-
 class LoginController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final DatabaseReference _ref = FirebaseDatabase.instance.ref().child('user');
