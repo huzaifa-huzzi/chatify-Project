@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 /// Light Theme
 var lightTheme = ThemeData();
 
-
 /// Dark Theme
 var darkTheme = ThemeData(
   brightness: Brightness.dark,
