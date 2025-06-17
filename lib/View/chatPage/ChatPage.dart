@@ -11,7 +11,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 
-
 class ChatPage extends StatefulWidget {
    final String userId;
    final String userName;
