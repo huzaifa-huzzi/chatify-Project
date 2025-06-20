@@ -1,6 +1,5 @@
 
 
-
 class AppString {
 
   static const appName = 'Chatify';
